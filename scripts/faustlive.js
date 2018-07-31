@@ -270,6 +270,14 @@ function runFaustCode()
     compileDSP();
 }
 
+function activateRunButton() 
+{
+	// Setup the click action
+  	var div = document.querySelector("#run");
+  	div.style.color = "#fff";
+  	div.onclick = runFaustCode;
+}
+
 // Stop the currently running Faust code
 function stopFaustCode() 
 {
@@ -380,8 +388,8 @@ function openBlockDiagram()
 function trigBlockDiagram(key)
 {
     console.log("We got the key", key);
-    console.log("the url is : ", "https://faustservice.grame.fr/" + key + "/diagram/process.svg" );
-    window.open("https://faustservice.grame.fr/" + key + "/diagram/process.svg", 'blockdiagram');
+    console.log("the url is : ", document.getElementById("exportUrl").value + "/" + key + "/diagram/process.svg" );
+    window.open(document.getElementById("exportUrl").value + "/" + key + "/diagram/process.svg", 'blockdiagram');
 }
 
 //-----------------------------------------------------------------------
@@ -526,7 +534,7 @@ window.addEventListener('touchstart', function()
 // Main entry point, called when libfaust.js has finished to load
 function init() 
 {
-	console.log("FaustEditor: version 1.0.3");
+	console.log("FaustEditor: version 1.0.4");
 
     // No polling from the server needed, so use an empty loop
     _f4u$t.main_loop = function() {}
@@ -563,7 +571,8 @@ function init()
 
     document.addEventListener("keypress", ctrlRunFaustCode, true);
     
-    //console.log("end of init");
+    // Make the run button usable
+    activateRunButton();
 }
 
 // Setup the main entry point in libfaust.js
